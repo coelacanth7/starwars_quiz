@@ -2,8 +2,8 @@ console.log("HEY");
 
 const questions = [
 	{
-		question: "What was the original name of the first Star Wars?",
-		answers: ["Star Wars", "A New Hope", "Space Conflict", "A Jedi Tale"],
+		question: "What was the original production name of the first Star Wars?",
+		answers: ["Star Wars", "A New Hope", "Space Conflict", "Adventures of Luke Starkiller"],
 		answer: 0
 	},
 	{
@@ -55,30 +55,22 @@ var createQuestionHtml = currentQuestion => {
 	questionDiv.appendChild(ul);
 	quiz.appendChild(questionDiv);
 
-	let selectedValue = getSelectedValue();
+	getSelectedValue();
 };
 
 var getSelectedValue = () => {
-	let selected;
-
 	[].forEach.call(listOfAnswers, li => {
-		selected = createListenersOnLi(li);
+		createListenersOnLi(li);
 	});
-
-	return selected;
 };
 
 var createListenersOnLi = li => {
-	let selected;
-
 	li.addEventListener("click", () => {
 		removeSelectedClassOnLi();
-		selected = li;
-		console.log(selected);
+		var selected = li;
+		console.log(selected.innerHTML);
 		li.classList.add("selected");
 	});
-
-	return selected;
 };
 
 var removeSelectedClassOnLi = () => {
