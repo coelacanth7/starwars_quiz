@@ -3,8 +3,13 @@ console.log("HEY");
 const questions = [
 	{
 		question: "What was the original production name of the first Star Wars?",
-		answers: ["Star Wars", "A New Hope", "Space Conflict", "Adventures of Luke Starkiller"],
-		answer: 0
+		answers: [
+			"Star Wars",
+			"A New Hope",
+			"Space Conflict",
+			"Adventures of Luke Starkiller"
+		],
+		answer: 3
 	},
 	{
 		question: "What is Boba Fett's home planet?",
@@ -13,8 +18,8 @@ const questions = [
 	}
 ];
 
-var initialState = () => {
-	return { questionIndex: 0, points: 0 };
+const initialState = () => {
+	return { points: 0 };
 };
 
 let state = initialState();
@@ -22,18 +27,23 @@ let state = initialState();
 const startBtn = document.getElementById("startBtn");
 const quiz = document.getElementById("quiz");
 const listOfAnswers = document.getElementsByClassName("answers");
+const submitBtn = document.createElement("div");
+let prevailingQuestion, selected;
 
 startBtn.addEventListener("click", () => {
-	quiz.innerHTML = "";
 	getQuestion();
 });
 
-var getQuestion = () => {
+const getQuestion = () => {
 	questions.length ? createQuestionHtml(questions.shift()) : showScore();
 };
 
-var createQuestionHtml = currentQuestion => {
+const createQuestionHtml = currentQuestion => {
 	let li;
+
+	prevailingQuestion = currentQuestion;
+
+	quiz.innerHTML = "";
 
 	const questionDiv = document.createElement("div");
 
@@ -55,30 +65,55 @@ var createQuestionHtml = currentQuestion => {
 	questionDiv.appendChild(ul);
 	quiz.appendChild(questionDiv);
 
+	submitBtn.innerHTML = "SUBMIT";
+	quiz.appendChild(submitBtn);
+	submitBtn.addEventListener("click", validate);
+
 	getSelectedValue();
 };
 
-var getSelectedValue = () => {
+const getSelectedValue = () => {
 	[].forEach.call(listOfAnswers, li => {
 		createListenersOnLi(li);
 	});
 };
 
-var createListenersOnLi = li => {
+const createListenersOnLi = li => {
 	li.addEventListener("click", () => {
 		removeSelectedClassOnLi();
-		var selected = li;
-		console.log(selected.innerHTML);
+		selected = li.innerHTML;
 		li.classList.add("selected");
 	});
 };
 
-var removeSelectedClassOnLi = () => {
+const removeSelectedClassOnLi = () => {
 	[].forEach.call(listOfAnswers, li => {
 		li.classList.remove("selected");
 	});
 };
 
-var validateQuestion = () => {};
+const validate = () => {
+	if (selected) {
+		checkAnswerOnSubmit(selected);
+	}
+};
 
-var checkAnswer = () => {};
+const checkAnswerOnSubmit = selected => {
+  console.log("checkAnswerOnSubmit")
+  console.log(prevailingQuestion)
+	if (prevailingQuestion.answers[prevailingQuestion.answer] === selected) {
+		console.log("yes");
+		state.points += 1;
+	} else {
+		console.log("no");
+	}
+
+  selected = null
+  prevailingQuestion = null
+  submitBtn.removeEventListener("click", validate)
+	getQuestion();
+};
+
+const showScore = () => {
+	quiz.innerHTML = state.points;
+};
