@@ -1,5 +1,3 @@
-console.log("HEY");
-
 const questions = [
 	{
 		question: "What was the original production name of the first Star Wars?",
@@ -35,10 +33,12 @@ startBtn.addEventListener("click", () => {
 });
 
 const getQuestion = () => {
+	console.log("getQuestion");
 	questions.length ? createQuestionHtml(questions.shift()) : showScore();
 };
 
 const createQuestionHtml = currentQuestion => {
+	console.log("createQuestionHtml");
 	let li;
 
 	prevailingQuestion = currentQuestion;
@@ -69,16 +69,18 @@ const createQuestionHtml = currentQuestion => {
 	quiz.appendChild(submitBtn);
 	submitBtn.addEventListener("click", validate);
 
-	getSelectedValue();
+	modifyEachLi();
 };
 
-const getSelectedValue = () => {
+const modifyEachLi = () => {
+	console.log("modifyEachLi");
 	[].forEach.call(listOfAnswers, li => {
 		createListenersOnLi(li);
 	});
 };
 
 const createListenersOnLi = li => {
+	console.log("createListenersOnLi");
 	li.addEventListener("click", () => {
 		removeSelectedClassOnLi();
 		selected = li.innerHTML;
@@ -87,20 +89,22 @@ const createListenersOnLi = li => {
 };
 
 const removeSelectedClassOnLi = () => {
+	console.log("removeSelectedClassOnLi");
 	[].forEach.call(listOfAnswers, li => {
 		li.classList.remove("selected");
 	});
 };
 
 const validate = () => {
+	console.log("validate");
+
 	if (selected) {
 		checkAnswerOnSubmit(selected);
 	}
 };
 
 const checkAnswerOnSubmit = selected => {
-  console.log("checkAnswerOnSubmit")
-  console.log(prevailingQuestion)
+	console.log("checkAnswerOnSubmit");
 	if (prevailingQuestion.answers[prevailingQuestion.answer] === selected) {
 		console.log("yes");
 		state.points += 1;
@@ -108,12 +112,13 @@ const checkAnswerOnSubmit = selected => {
 		console.log("no");
 	}
 
-  selected = null
-  prevailingQuestion = null
-  submitBtn.removeEventListener("click", validate)
+	selected = null;
+	prevailingQuestion = null;
+	submitBtn.removeEventListener("click", validate);
 	getQuestion();
 };
 
 const showScore = () => {
+	console.log("showScore");
 	quiz.innerHTML = state.points;
 };
