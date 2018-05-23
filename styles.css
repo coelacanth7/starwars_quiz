@@ -131,3 +131,44 @@ table {
 * {
 	box-sizing: border-box;
 }
+
+/* STYLES */
+
+html {
+	background-color: rebeccapurple;
+	color: #fff;
+}
+
+body {
+	height: 100vh;
+	padding: 30px;
+}
+
+#wrapper {
+	margin: 0 auto;
+	max-width: 700px;
+}
+
+h1 {
+	font-family: "Playfair Display", Serif;
+	font-size: 84px;
+	font-style: italic;
+	margin-bottom: 40px;
+}
+
+#quiz {
+	font-family: "Source Sans Pro", Sans-Serif;
+	font-size: 22px;
+}
+
+#quiz h2 {
+	padding-bottom: 10px;
+}
+
+#quiz li {
+	padding: 10px;
+}
+
+#quiz ul {
+	padding-bottom: 10px;
+}
